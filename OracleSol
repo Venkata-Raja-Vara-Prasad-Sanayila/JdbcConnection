@@ -1,0 +1,45 @@
+import java.sql.*;  
+public class OracleSol{  
+public static void main(String args[]){  
+try{  
+    //load the driver class  
+    Class.forName("oracle.jdbc.driver.OracleDriver");  
+  
+    //create  the connection object  
+    Connection gc =DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","VEnkata","123456");  
+  
+    //create the statement object  
+    Statement stmt=gc.createStatement();  
+
+    stmt.executeUpdate("Insert into orders values(1,'Raja','Rajahmundry',533125,'Andhra Pradesh')");
+    stmt.executeUpdate("Insert into orders values(2,'Renuka','Vizag',521029,'Andhra Pradesh')");
+    stmt.executeUpdate("Insert into orders values(3,'Rajesh','Lalithanagar',533106,'Telangana')");
+    stmt.executeUpdate("Insert into orders values(4,'Teja','Agaraharam',533123,'Bhopal')");
+
+    //Update operation
+    stmt.executeUpdate("Update orders set customerName='Vaishnav' where orderid = 4");
+    stmt.executeUpdate("update orders set city = 'Visakhapatnam' where customerName='Renuka'");
+
+    //Delete Operation
+    String dl = "delete from orders where orderid = 3";
+    stmt.executeUpdate(dl);
+
+
+    //Execute query  
+    ResultSet res=stmt.executeQuery("select * from orders");  
+
+    while(res.next()) {
+        System.out.println("OrderId : "+res.getInt(1)+"\nCustomer Name : "+res.getString(2)+"\nCity : "+res.getString(3)+"\nPincode : "+res.getInt(4)+"\nState : "+res.getString(5)+"\n\n");  
+    }
+    
+    //close the connection object  
+    gc.close();  
+  
+    }
+catch(Exception e){ 
+    System.out.println(e);
+    
+    }  
+  
+}  
+}
